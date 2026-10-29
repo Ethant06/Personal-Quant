@@ -16,6 +16,7 @@ click
 colorama
 contourpy
 cycler
+dotenv
 fastapi
 filelock
 flake8

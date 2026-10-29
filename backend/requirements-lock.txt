@@ -14,6 +14,7 @@ cloudpickle==3.1.2
 colorama==0.4.6
 contourpy==1.4.0
 cycler==0.12.1
+dotenv==0.9.9
 fastapi==0.162.0
 filelock==4.2.4
 flake8==7.4.1
@@ -57,6 +58,8 @@ patsy==1.0.3
 pillow==13.0.0
 protobuf==7.36.2
 psycopg==3.3.6
+psycopg-binary==3.3.6
+psycopg2==2.9.13
 pwdlib==0.3.1
 pycodestyle==2.15.0
 pycparser==3.12
@@ -67,6 +70,7 @@ Pygments==2.21.0
 PyJWT==2.15.1
 pyparsing==3.3.3
 python-dateutil==3.0.0
+python-dotenv==1.2.4
 python-multipart==0.0.32
 pytz==2026.5
 PyYAML==6.0.3
