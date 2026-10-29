@@ -53,6 +53,23 @@ dbname=postgres
 
 Password special characters are URL-encoded in code. Use session pooler port `5432` with SQLAlchemy `NullPool`.
 
+### Apply Week 1 schema (once)
+
+Tables live in Postgres schema **`investory`** (same DB / same pooler URL — no `.env` change).
+
+1. Supabase Dashboard → **SQL Editor** → run [`001_core_tables.sql`](backend/db/migrations/001_core_tables.sql)
+2. Or: `python db\apply_migrations.py` from `backend/` (see [`backend/db/README.md`](backend/db/README.md))
+
+Creates `investory.users`, `investory.companies`, `investory.watchlist_items`.
+
+### Auth (Supabase)
+
+1. Follow [docs/AUTH_SETUP.md](docs/AUTH_SETUP.md) (enable Email provider, copy API keys into `backend/.env`).
+2. Apply [`002_auth_users_link.sql`](backend/db/migrations/002_auth_users_link.sql) (or `python db\apply_migrations.py`).
+3. Sign up a user in Supabase Auth, get an access token, then call `GET /auth/me` with `Authorization: Bearer <token>`.
+
+See [backend/.env.example](backend/.env.example) for required keys. Pooler DB URL does **not** change for Auth.
+
 Run the API:
 
 ```powershell
@@ -61,7 +78,8 @@ cd backend
 uvicorn app.main:app --reload
 ```
 
-- Health: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+- Home: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+- Health (DB + tables): [http://127.0.0.1:8000/health](http://127.0.0.1:8000/health)
 - Docs: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
 ## Frontend setup

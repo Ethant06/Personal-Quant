@@ -58,8 +58,11 @@ Before implementing a feature: read the matching Notion PRD/ADR under that paren
 
 ## Backend conventions
 
-- Env vars live in `backend/.env` (never commit). Keys today: `user`, `password`, `host`, `port`, `dbname`.
-- DB engine: SQLAlchemy + Supabase **session pooler**, `sslmode=require`, URL-encode passwords, `NullPool` (see `backend/app/database.py`).
+- Env vars live in `backend/.env` (never commit). See `backend/.env.example`.
+  - DB pooler: `user`, `password`, `host`, `port`, `dbname`
+  - Auth: `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY` (not `sb_secret_` / not JWT secret)
+- DB engine: SQLAlchemy + Supabase **session pooler**, schema `investory`, `NullPool` (see `backend/app/database.py`).
+- Auth: Supabase Auth JWTs; protect routes with `get_current_profile` (`backend/app/auth/`). Setup: `docs/AUTH_SETUP.md`.
 - Prefer small FastAPI routers under `backend/app/` as the API grows (`api/`, `models/`, `services/`).
 - No raw SQL scattered in route handlers long-term — keep queries near models/services.
 
