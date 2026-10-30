@@ -14,7 +14,7 @@ alwaysApply: true
 ## Stack
 
 - `backend/`: FastAPI + SQLAlchemy + Supabase Postgres (session pooler)
-- `frontend/`: Next.js + TypeScript + Tailwind
+- `frontend/`: Vite + React + TypeScript
 - Docs narrative: Notion. Code: this repo via normal git.
 
 ## Notion scope (required)

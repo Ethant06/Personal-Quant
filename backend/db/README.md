@@ -29,6 +29,9 @@ python db\apply_migrations.py
 |------|---------|
 | `001_core_tables.sql` | Schema `investory` + users / companies / watchlist_items |
 | `002_auth_users_link.sql` | Minimal Auth link: drop id default, FK to `auth.users`, signup trigger |
+| `003_seed_companies.sql` | Starter tickers for search (AAPL, MSFT, …) |
+| `004_articles_briefings.sql` | articles / briefings / briefing_items |
+| `005_classifications.sql` | article.category + classifications table |
 
 `002` is one-shot (apply once). Auth setup walkthrough: [../../docs/AUTH_SETUP.md](../../docs/AUTH_SETUP.md).
 

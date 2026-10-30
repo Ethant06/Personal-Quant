@@ -39,6 +39,25 @@ def db_env_ready() -> bool:
     return all([DB_USER, DB_PASSWORD, DB_HOST, DB_PORT, DB_NAME])
 
 
+# Shared secret for cron / Railway to hit POST /internal/jobs/*
+INTERNAL_JOB_SECRET = os.getenv("INTERNAL_JOB_SECRET", "")
+
+# Optional FRED API key for live macro series (https://fred.stlouisfed.org/docs/api/api_key.html)
+FRED_API_KEY = os.getenv("FRED_API_KEY", "")
+
+# In-process daily news scrape (when API process stays running)
+ENABLE_DAILY_SCHEDULER = os.getenv("ENABLE_DAILY_SCHEDULER", "false").lower() in {
+    "1",
+    "true",
+    "yes",
+    "on",
+}
+try:
+    DAILY_INGEST_HOUR_UTC = int(os.getenv("DAILY_INGEST_HOUR_UTC", "13"))
+except ValueError:
+    DAILY_INGEST_HOUR_UTC = 13
+
+
 def auth_env_ready() -> bool:
     """True when FastAPI can verify user tokens via Supabase Auth /user."""
     return bool(SUPABASE_URL and SUPABASE_PUBLISHABLE_KEY)

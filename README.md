@@ -20,7 +20,7 @@ Details: [docs/SOURCE_OF_TRUTH.md](docs/SOURCE_OF_TRUTH.md) · Agent guide: [AGE
 
 ```
 backend/     FastAPI + SQLAlchemy → Supabase Postgres
-frontend/    Next.js + TypeScript + Tailwind (scaffold in Week 1)
+frontend/    Vite + React + TypeScript
 docs/        Source-of-truth notes + Notion templates
 ```
 
@@ -82,9 +82,44 @@ uvicorn app.main:app --reload
 - Health (DB + tables): [http://127.0.0.1:8000/health](http://127.0.0.1:8000/health)
 - Docs: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
+### Daily news scrape (automatic digests)
+
+News is pulled from public feeds (Yahoo RSS + Yahoo search JSON, Google News RSS fallback)—not HTML page scraping—then stored in `investory.articles` and turned into digests.
+
+Set in `backend/.env`:
+
+```env
+INTERNAL_JOB_SECRET=...
+ENABLE_DAILY_SCHEDULER=true
+DAILY_INGEST_HOUR_UTC=13
+```
+
+Ways to run:
+
+```powershell
+# one-shot
+cd backend
+$env:PYTHONPATH = (Get-Location).Path
+python -m app.jobs.daily_ingest
+```
+
+- While `uvicorn` is running with `ENABLE_DAILY_SCHEDULER=true`, a background thread runs the scrape once per day at `DAILY_INGEST_HOUR_UTC`.
+- Cron / Railway: `POST /internal/jobs/daily-ingest` (or `/internal/jobs/news-scrape`) with header `X-Job-Secret: <secret>`.
+
+The UI reads saved digests (watchlist ticker cards → company hub).
+
 ## Frontend setup
 
-`frontend/` is reserved for the Next.js app. Scaffold it when you start Week 1 work (see [frontend/README.md](frontend/README.md)).
+```powershell
+cd frontend
+npm install
+# create frontend/.env from .env.example
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173). Sign in with Supabase; the app calls FastAPI `GET /auth/me`.
+
+See [frontend/README.md](frontend/README.md).
 
 ## Development workflow
 
@@ -95,7 +130,7 @@ uvicorn app.main:app --reload
 
 ## Six-week MVP (summary)
 
-1. Foundation: schema, auth stub, Next.js shell  
+1. Foundation: schema, Auth, Vite React shell  
 2. Watchlist: company search + CRUD  
 3. News ingest + classification  
 4. Daily briefing + sources  

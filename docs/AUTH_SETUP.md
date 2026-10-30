@@ -17,7 +17,7 @@ Supabase’s newer dashboard shows **publishable / secret** keys (not the old `a
 ## Mental model
 
 ```text
-Next.js / test client
+Vite React app (or get_token.py)
     │  email + password
     ▼
 Supabase Auth  →  auth.users  →  trigger  →  investory.users
@@ -29,6 +29,8 @@ FastAPI  GET /auth/v1/user  (apikey = publishable, Bearer = user JWT)
     ▼
 GET /auth/me
 ```
+
+Prefer testing via the React app at `http://localhost:5173` once the frontend is running.
 
 ## 1. Enable Email auth
 

@@ -1,0 +1,13 @@
+import { createClient } from '@supabase/supabase-js'
+
+const url = import.meta.env.VITE_SUPABASE_URL
+const publishableKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY
+
+if (!url || !publishableKey) {
+  throw new Error(
+    'Missing VITE_SUPABASE_URL or VITE_SUPABASE_PUBLISHABLE_KEY in frontend/.env',
+  )
+}
+
+/** Browser Supabase client — handles signup/login and session tokens. */
+export const supabase = createClient(url, publishableKey)

@@ -18,7 +18,7 @@ Users maintain a company watchlist and receive daily briefings that explain what
 
 | Layer | Choice |
 |-------|--------|
-| Frontend | Next.js, React, TypeScript, Tailwind (`frontend/`) |
+| Frontend | Vite, React, TypeScript (`frontend/`) |
 | Backend | Python, FastAPI (`backend/`) |
 | Database | Supabase PostgreSQL (session pooler) |
 | AI | LLM classification, summarization, beginner explanations |
@@ -36,7 +36,7 @@ Personal-Quant/
   .cursor/rules/            # Cursor rule packs (.mdc), once installed
   .github/                  # optional issue + PR templates
   backend/                  # FastAPI API
-  frontend/                 # Next.js app (scaffold in Week 1)
+  frontend/                 # Vite + React app
 ```
 
 ## Source of truth
@@ -68,8 +68,9 @@ Before implementing a feature: read the matching Notion PRD/ADR under that paren
 
 ## Frontend conventions
 
-- App Router + TypeScript strict.
-- Talk to the FastAPI backend via env-based API base URL.
+- Vite + React + TypeScript.
+- Env vars must be prefixed `VITE_` (`frontend/.env`): Supabase URL/key + `VITE_API_URL`.
+- Login via `@supabase/supabase-js`; call FastAPI with the access token Bearer header.
 - Keep UI beginner-friendly; no trading jargon without explanation affordances.
 
 ## Git workflow (manual)

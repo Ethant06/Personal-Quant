@@ -8,9 +8,14 @@ ALTER TABLE investory.users
 
 -- 2. Enforce the link: every profile row belongs to an Auth identity
 --    ON DELETE CASCADE: deleting Auth user removes profile (+ watchlist via 001 FKs)
-ALTER TABLE investory.users
-    ADD CONSTRAINT users_auth_id_fkey
-    FOREIGN KEY (id) REFERENCES auth.users (id) ON DELETE CASCADE;
+DO $$
+BEGIN
+    ALTER TABLE investory.users
+        ADD CONSTRAINT users_auth_id_fkey
+        FOREIGN KEY (id) REFERENCES auth.users (id) ON DELETE CASCADE;
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END $$;
 
 -- 3. When Auth inserts a new user, also insert investory.users with the same id
 --    SECURITY DEFINER: runs with function owner privileges (needed to write profile)

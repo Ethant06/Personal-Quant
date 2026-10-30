@@ -1,5 +1,5 @@
 ---
-description: Next.js frontend conventions for Investory
+description: Vite React frontend conventions for Investory
 globs: frontend/**/*.{ts,tsx,js,jsx,css}
 alwaysApply: false
 ---
@@ -8,7 +8,7 @@ alwaysApply: false
 
 ## Stack
 
-- Next.js App Router, React, TypeScript, Tailwind CSS.
+- Vite + React + TypeScript (SPA). Not Next.js.
 - Functional components only.
 
 ## UX for beginners
@@ -19,12 +19,12 @@ alwaysApply: false
 
 ## Architecture
 
-- Browser calls the FastAPI backend via a public API base URL from env (`NEXT_PUBLIC_API_URL` or similar).
-- Keep API fetch helpers in `lib/`; keep UI in `components/` and routes in `app/`.
-- Prefer server components by default; use client components when interactivity requires it.
+- Auth: `@supabase/supabase-js` in the browser.
+- API: call FastAPI via `import.meta.env.VITE_API_URL` with `Authorization: Bearer <access_token>`.
+- Keep clients in `src/lib/`; keep UI in `src/` components / pages as the app grows.
 
 ## Quality
 
 - Type props and API responses.
-- Handle loading and error states for watchlist and briefing views.
-- Do not commit `.env.local` secrets.
+- Handle loading and error states for auth, watchlist, and briefing views.
+- Do not commit `frontend/.env`.
